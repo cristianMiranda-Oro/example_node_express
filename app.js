@@ -26,12 +26,20 @@ app.use(express.json());
 //aplication/x-www-form-urlencoded
 app.use(express.urlencoded({extended: true}));
 
+// Motor de plantilla
+app.set("view engine", "ejs");
+app.set("views", __dirname+"/views")
 
 
 //rutas
 app.get('/', function (req, res) {
   res.send('Hello World!');
 });
+
+app.get('/example', function(req, res) {
+  res.render("index", {titulo: "inicio EJS"});
+});
+
 app.use('/api', require('./routes/nota'));
 app.use('/users', require('./routes/users'));
 app.use('/login', require('./routes/login'));
