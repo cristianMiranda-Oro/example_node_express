@@ -6,8 +6,7 @@ import Nota from '../models/nota';
 
 //Agregar una nota
 router.post('/nueva-nota', async(req, res) => {
-    return res.status(200);
-    /* const body = req.body;
+    const body = req.body;
     try {
         const notaDB = await Nota.create(body);
         res.status(200).json(notaDB);
@@ -16,8 +15,73 @@ router.post('/nueva-nota', async(req, res) => {
             mensaje: 'Ocurrio un error',
             error
         })
-    } */
+    }
 });
+
+//Get con parametros
+router.get('/nota/:id', async(req, res) => {
+    const _id = req.params.id;
+    try {
+        const notaDB = await Nota.findOne({_id});
+        res.json(notaDB);
+    } catch (error) {
+        return res.status(400).json({
+            mensaje: 'Ocurrio un error',
+            error
+        })
+    }
+});
+
+//Get con todos los documentos
+router.get('/nota', async(req, res) => {
+    try {
+        const notaDb = await Nota.find();
+        res.json(notaDb);
+    } catch (error) {
+        return res.status(400).json({
+            mensaje: 'Ocurrio un error',
+            error
+        })
+    }
+});
+
+// Delete eliminar una nota
+router.delete('/nota/:id', async(req, res) => {
+    const _id = req.params.id;
+    try {
+        const notaDb = await Nota.findByIdAndDelete({_id});
+        if(!notaDb) {
+            return res.status(400).json({
+                mensaje: 'No se encontró el id indicado',
+                error
+            })
+        }
+        res.json(notaDb);
+    } catch (error) {
+        return res.status(400).json({
+            mensaje: 'Ocurrio un error',
+            error
+        })
+    }
+});
+
+/// Put actualizar una nota
+router.put('/nota/:id', async(req, res) => {
+    const _id = req.params.id;
+    const body = req.body;
+    try {
+        const notaDb = await Nota.findByIdAndUpdate(
+            _id,
+            body,
+            {new: true}
+        );
+        res.json(notaDb);
+    } catch (error) {
+        return res.status(400).json({
+            mensaje: 'Ocurrio un error'
+        })
+    }
+})
 
 //Exportamos la configuracion de express app
 module.exports = router;

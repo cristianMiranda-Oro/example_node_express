@@ -8,7 +8,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 
 const uri = 'mongodb://localhost:27017/myapp';
-const options = {useNewUrlParser: true, useCreateIndex: true};
+const options = {useNewUrlParser: true,  autoIndex: true};
 
 // Or using promises
 mongoose.connect(uri, options).then(
