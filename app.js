@@ -7,7 +7,7 @@ const path = require('path');
 //Conexion base de datos
 const mongoose = require('mongoose');
 
-const uri = 'mongodb://localhost:27017/myapp';
+const uri = 'mongodb://127.0.0.1:27017/myapp';
 const options = {useNewUrlParser: true,  autoIndex: true};
 
 // Or using promises
@@ -33,6 +33,8 @@ app.get('/', function (req, res) {
   res.send('Hello World!');
 });
 app.use('/api', require('./routes/nota'));
+app.use('/users', require('./routes/users'));
+app.use('/login', require('./routes/login'));
 
 // Middleware para Vue.js router modo history
 const history = require('connect-history-api-fallback');
